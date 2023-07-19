@@ -5,6 +5,11 @@ import { useRouter } from "next/router";
 const modelName = "vulnerabilidades";
 export default function Vulnerabilidades({ vulnerabilidades }) {
   const router = useRouter();
+
+  function handleEdit(id) {
+    router.push(`${modelName}/editar?id=${id}`);
+  }
+
   return (
     <>
       <h1>Tabla de Vulnerabilidades</h1>
@@ -15,7 +20,12 @@ export default function Vulnerabilidades({ vulnerabilidades }) {
       >
         Agregar
       </button>
-      <ModelTable model={Vulnerabilidad} data={vulnerabilidades} />
+      <ModelTable
+        model={Vulnerabilidad}
+        data={vulnerabilidades}
+        modelName={modelName}
+        editFun={handleEdit}
+      />
     </>
   );
 }

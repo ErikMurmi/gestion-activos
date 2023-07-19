@@ -27,7 +27,7 @@ export default function Controles({ controles }) {
       >
         Agregar
       </button>
-      <ModelTable model={Control} data={controles} />
+      <ModelTable model={Control} data={controles} modelName={modelName} />
     </>
   );
 }

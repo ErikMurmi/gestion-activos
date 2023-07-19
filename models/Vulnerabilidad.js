@@ -1,7 +1,7 @@
 export const Vulnerabilidad = {
-  Nombre: "",
+  Vulnerabilidad: "",
   Descripción: "",
   Categoría: "",
-  Clasificacion: "",
+  Clasificación: "",
   Valor: "",
 };

@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { addItem } from "controllers/modelosController";
+import { useState, useEffect } from "react";
+import { updateItem } from "controllers/modelosController";
+import { useRouter } from "next/router";
+import { getItem } from "controllers/modelosController";
+
 const modelName = "amenazas";
 
 const Amenaza = {
@@ -29,8 +32,25 @@ const opcionesCategoria = [
 
 const opcionesValor = ["Alto", "Moderado", "Bajo"];
 
-export default function CrearAmenaza() {
+export default function EditarAmenaza() {
   const [formulario, setFormulario] = useState(Amenaza);
+  const router = useRouter(); // Obtener el router
+  const { id } = router.query; // Obtener el id de la URL
+
+  useEffect(() => {
+    if (id) {
+      const obtenerItem = async () => {
+        try {
+          const item = await getItem(modelName, id);
+          setFormulario(item);
+        } catch (error) {
+          console.error("Error al obtener el item:", error);
+        }
+      };
+
+      obtenerItem();
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,19 +61,20 @@ export default function CrearAmenaza() {
     e.preventDefault();
     // Aquí puedes enviar los datos del formulario a la base de datos o realizar cualquier otra acción.
     //console.log(formulario);
-    const creado = await addItem(formulario, modelName);
+    const actualizado = await updateItem(formulario, modelName, id);
     let msg = "No se pudo crear el item";
-    if (creado) {
+    if (actualizado) {
       // Restablecer el formulario después de enviar los datos
       setFormulario(Amenaza);
       msg = "Se creo el item correctamente";
+      alert(msg);
+      router.replace(`/${modelName}`);
     }
-    alert(msg);
   };
 
   return (
     <div>
-      <h1>Crear Amenaza</h1>
+      <h1>Editar Amenaza</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Origen:</label>
@@ -115,7 +136,7 @@ export default function CrearAmenaza() {
           />
         </div>
         <button className="submit-btn" type="submit">
-          Crear Amenaza
+          Editar Amenaza
         </button>
       </form>
     </div>

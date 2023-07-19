@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { addItem } from "controllers/modelosController";
-import { getItems } from "controllers/modelosController";
+import { useState, useEffect } from "react";
+import { updateItem } from "controllers/modelosController";
+import { useRouter } from "next/router";
+import { getItems, getItem } from "controllers/modelosController";
 
 const modelName = "vulnerabilidades";
 const Vulnerabilidad = {
@@ -26,6 +27,23 @@ const opcionesValor = ["Alto", "Moderado", "Bajo"];
 
 export default function CrearVulnerabilidad({ riesgos }) {
   const [formulario, setFormulario] = useState(Vulnerabilidad);
+  const router = useRouter(); // Obtener el router
+  const { id } = router.query; // Obtener el id de la URL
+
+  useEffect(() => {
+    if (id) {
+      const obtenerItem = async () => {
+        try {
+          const item = await getItem(modelName, id);
+          setFormulario(item);
+        } catch (error) {
+          console.error("Error al obtener el item:", error);
+        }
+      };
+
+      obtenerItem();
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,19 +54,19 @@ export default function CrearVulnerabilidad({ riesgos }) {
     e.preventDefault();
     // Aquí puedes enviar los datos del formulario a la base de datos o realizar cualquier otra acción.
     //console.log(formulario);
-    const creado = await addItem(formulario, modelName);
+    const actualizado = await updateItem(formulario, modelName, id);
     let msg = "No se pudo crear el item";
-    if (creado) {
+    if (actualizado) {
       // Restablecer el formulario después de enviar los datos
-      setFormulario(Vulnerabilidad);
       msg = "Se creo el item correctamente";
+      alert(msg);
+      router.replace(`/${modelName}`);
     }
-    alert(msg);
   };
 
   return (
     <div>
-      <h1>Crear Vulnerabilidad</h1>
+      <h1>Editar Vulnerabilidad</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Nombre:</label>
@@ -110,7 +128,7 @@ export default function CrearVulnerabilidad({ riesgos }) {
           </select>
         </div>
         <button className="submit-btn" type="submit">
-          Crear Vulnerabilidad
+          Editar Vulnerabilidad
         </button>
       </form>
     </div>

@@ -20,7 +20,7 @@ const tdStyle = {
   color: "black", // Set text color to black in the table cells
 };
 
-export default function ModelTable({ model, data, modelName = "" }) {
+export default function ModelTable({ model, data, editFun, modelName = "" }) {
   const columns = Object.keys(model);
   const columnsWithOptions = [...columns, "Opciones"];
   //console.log("data received: ", data);
@@ -53,7 +53,9 @@ export default function ModelTable({ model, data, modelName = "" }) {
               <td key={columnIndex} style={tdStyle}>
                 {column === "Opciones" ? (
                   <div className="options-container">
-                    <button className="editar">Editar</button>
+                    <button className="editar" onClick={() => editFun(row.id)}>
+                      Editar
+                    </button>
                     <button
                       className="eliminar"
                       onClick={() => handleDelete(row.id)}

@@ -5,16 +5,12 @@ import { useRouter } from "next/router";
 const modelName = "amenazas";
 
 export default function Amenazas({ amenazas }) {
-  // const amenzas = [
-  //   {
-  //     Origen: "Error Humano",
-  //     Categoría: "Hardware",
-  //     Amenaza: "Avería Física",
-  //     Valor: "Media",
-  //     Descripción: "Mala Instalación del componente",
-  //   },
-  // ];
   const router = useRouter();
+
+  function handleEdit(id) {
+    router.push(`${modelName}/editar?id=${id}`);
+  }
+
   return (
     <>
       <h1>Tabla de Amenazas</h1>
@@ -25,7 +21,12 @@ export default function Amenazas({ amenazas }) {
       >
         Agregar
       </button>
-      <ModelTable model={Amenaza} data={amenazas} />
+      <ModelTable
+        model={Amenaza}
+        data={amenazas}
+        modelName={modelName}
+        editFun={handleEdit}
+      />
     </>
   );
 }

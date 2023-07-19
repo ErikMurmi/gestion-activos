@@ -28,7 +28,7 @@ export default function Riesgos({ riesgos }) {
       >
         Agregar
       </button>
-      <ModelTable model={Riesgo} data={riesgos} />
+      <ModelTable model={Riesgo} data={riesgos} modelName={modelName} />
     </>
   );
 }
