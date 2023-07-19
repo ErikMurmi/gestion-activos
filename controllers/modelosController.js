@@ -1,6 +1,7 @@
+const api_url = process.env.NEXT_PUBLIC_API_URL;
 export const addItem = async (newItem, modelName) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/models`, {
+    const res = await fetch(`${api_url}/models`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,20 +15,23 @@ export const addItem = async (newItem, modelName) => {
 };
 
 export const getItems = async (modelName) => {
-  const res = await fetch(
-    `http://localhost:3000/api/models?modelname=${modelName}`
-  );
+  const res = await fetch(`${api_url}/models?modelname=${modelName}`);
   const data = await res.json();
   return data;
 };
 
-// export const deleteAlbum = async (id)=>{
-//     try{
-//         const res = await fetch(`${service_url}/albums/`+id,{
-//             method:'DELETE'
-//         })
-//         return res
-//     }catch(error){
-//         console.log(error)
-//     }
-// }
+export const deleteItem = async (modelName, docId) => {
+  try {
+    const res = await fetch(
+      `${api_url}/models?modelname=${modelName}&id=${docId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

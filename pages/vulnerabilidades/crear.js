@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addItem } from "controllers/modelosController";
+import { getItems } from "controllers/modelosController";
 
 const modelName = "vulnerabilidades";
 const Vulnerabilidad = {
@@ -22,7 +23,7 @@ const opcionesRiesgo = [
   "Explotación de vulnerabilidades",
 ];
 
-export default function CrearVulnerabilidad() {
+export default function CrearVulnerabilidad({ riesgos }) {
   const [formulario, setFormulario] = useState(Vulnerabilidad);
 
   const handleChange = (e) => {
@@ -38,7 +39,7 @@ export default function CrearVulnerabilidad() {
     let msg = "No se pudo crear el item";
     if (creado) {
       // Restablecer el formulario después de enviar los datos
-      setFormulario(Activo);
+      setFormulario(Vulnerabilidad);
       msg = "Se creo el item correctamente";
     }
     alert(msg);
@@ -89,9 +90,9 @@ export default function CrearVulnerabilidad() {
             onChange={handleChange}
           >
             <option value="">Selecciona un Riesgo</option>
-            {opcionesRiesgo.map((riesgo, index) => (
-              <option key={index} value={riesgo}>
-                {riesgo}
+            {riesgos.map((riesgo, index) => (
+              <option key={riesgo.Nombre} value={riesgo.Nombre}>
+                {riesgo.Nombre}
               </option>
             ))}
           </select>
@@ -103,3 +104,12 @@ export default function CrearVulnerabilidad() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const riesgos = await getItems("riesgos");
+  return {
+    props: {
+      riesgos: riesgos,
+    },
+  };
+};

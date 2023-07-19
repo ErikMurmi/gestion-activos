@@ -41,7 +41,7 @@ export default function CrearAmenaza() {
     let msg = "No se pudo crear el item";
     if (creado) {
       // Restablecer el formulario después de enviar los datos
-      setFormulario(Activo);
+      setFormulario(Amenaza);
       msg = "Se creo el item correctamente";
     }
     alert(msg);

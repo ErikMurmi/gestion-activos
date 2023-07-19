@@ -1,3 +1,6 @@
+import { deleteItem } from "controllers/modelosController";
+import Router from "next/router";
+
 const tableStyle = {
   border: "1px solid black",
   borderCollapse: "collapse",
@@ -17,9 +20,20 @@ const tdStyle = {
   color: "black", // Set text color to black in the table cells
 };
 
-export default function ModelTable({ model, data }) {
+export default function ModelTable({ model, data, modelName = "" }) {
   const columns = Object.keys(model);
   const columnsWithOptions = [...columns, "Opciones"];
+  //console.log("data received: ", data);
+
+  async function handleDelete(id) {
+    const deleted = await deleteItem(modelName, id);
+    if (deleted) {
+      alert("Se elimino correctamente el item");
+      Router.reload();
+    } else {
+      alert("Hubo un error al eliminar el item");
+    }
+  }
 
   return (
     <table style={tableStyle}>
@@ -40,7 +54,12 @@ export default function ModelTable({ model, data }) {
                 {column === "Opciones" ? (
                   <div className="options-container">
                     <button className="editar">Editar</button>
-                    <button className="eliminar">Eliminar</button>
+                    <button
+                      className="eliminar"
+                      onClick={() => handleDelete(row.id)}
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 ) : (
                   row[column]

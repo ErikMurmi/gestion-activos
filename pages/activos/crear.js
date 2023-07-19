@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { addItem } from "controllers/modelosController";
-
+import { getItems } from "controllers/modelosController";
 const modelName = "activos";
 
 const Activo = {
@@ -9,6 +9,7 @@ const Activo = {
   Clasificacion: "",
   Nombre: "",
   Responsable: "",
+  Vulnerabilidades: [],
 };
 
 const opcionesClasificacion = [
@@ -29,12 +30,29 @@ const opcionesDepartamento = [
   "Marketing",
 ];
 
-export default function CrearActivo() {
+export default function CrearActivo({ vulnerabilidades }) {
   const [formulario, setFormulario] = useState(Activo);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
+  };
+
+  const handleVulnerabilidadesChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setFormulario({
+        ...formulario,
+        Vulnerabilidades: [...formulario.Vulnerabilidades, value],
+      });
+    } else {
+      setFormulario({
+        ...formulario,
+        Vulnerabilidades: formulario.Vulnerabilidades.filter(
+          (v) => v !== value
+        ),
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -112,6 +130,25 @@ export default function CrearActivo() {
             onChange={handleChange}
           />
         </div>
+        <div className="form-group">
+          <label>Vulnerabilidades:</label>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {vulnerabilidades.map((vulnerabilidad) => (
+              <label key={vulnerabilidad.Nombre}>
+                <input
+                  type="checkbox"
+                  name="Vulnerabilidades"
+                  value={vulnerabilidad.Nombre}
+                  checked={formulario.Vulnerabilidades.includes(
+                    vulnerabilidad.Nombre
+                  )}
+                  onChange={handleVulnerabilidadesChange}
+                />
+                {vulnerabilidad.Nombre}
+              </label>
+            ))}
+          </div>
+        </div>
         <button className="submit-btn" type="submit">
           Crear Activo
         </button>
@@ -119,3 +156,12 @@ export default function CrearActivo() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const vulnerabilidades = await getItems("vulnerabilidades");
+  return {
+    props: {
+      vulnerabilidades: vulnerabilidades,
+    },
+  };
+};

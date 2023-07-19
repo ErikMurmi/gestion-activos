@@ -17,7 +17,7 @@ export default function Activos({ activos }) {
       >
         Agregar
       </button>
-      <ModelTable model={Activo} data={activos} />
+      <ModelTable model={Activo} data={activos} modelName={modelName} />
     </>
   );
 }

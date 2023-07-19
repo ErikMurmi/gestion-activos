@@ -1,5 +1,6 @@
 import { addItem } from "controllers/modelosController";
 import { useState } from "react";
+import { getItems } from "controllers/modelosController";
 
 const modelName = "controles";
 const Control = {
@@ -17,7 +18,7 @@ const opcionesCategoria = [
   "Auditorías",
 ];
 
-export default function CrearControl() {
+export default function CrearControl({ riesgos }) {
   const [formulario, setFormulario] = useState(Control);
 
   const handleChange = (e) => {
@@ -33,7 +34,7 @@ export default function CrearControl() {
     let msg = "No se pudo crear el item";
     if (creado) {
       // Restablecer el formulario después de enviar los datos
-      setFormulario(Activo);
+      setFormulario(Control);
       msg = "Se creo el item correctamente";
     }
     alert(msg);
@@ -87,12 +88,18 @@ export default function CrearControl() {
         </div>
         <div className="form-group">
           <label>Riesgo:</label>
-          <input
-            type="text"
+          <select
             name="Riesgo"
             value={formulario.Riesgo}
             onChange={handleChange}
-          />
+          >
+            <option value="">Selecciona un Riesgo</option>
+            {riesgos.map((riesgo) => (
+              <option key={riesgo.Nombre} value={riesgo.Nombre}>
+                {riesgo.Nombre}
+              </option>
+            ))}
+          </select>
         </div>
         <button className="submit-btn" type="submit">
           Crear Control
@@ -101,3 +108,12 @@ export default function CrearControl() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const riesgos = await getItems("riesgos");
+  return {
+    props: {
+      riesgos: riesgos,
+    },
+  };
+};
