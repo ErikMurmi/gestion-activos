@@ -13,7 +13,7 @@ export default function SideBar() {
         <Link href="/vulnerabilidades">
           <li>Vulnerabilidades</li>
         </Link>
-        <Link href="/amenzas">
+        <Link href="/amenazas">
           <li>Amenazas</li>
         </Link>
         <Link href="/controles">
