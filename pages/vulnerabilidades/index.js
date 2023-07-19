@@ -1,23 +1,30 @@
 import { Vulnerabilidad } from "../../models/Vulnerabilidad";
 import ModelTable from "../../components/ModelTable";
-
-export default function Vulnerabilidades() {
-  const vulnerabilidades = [
-    {
-      Nombre: "Base de datos",
-      Descripción: "Almacena información",
-      Categoría: "Software",
-      Clasificacion: "Confidencial",
-      Valor: "10,000 USD",
-    },
-  ];
+import { getItems } from "controllers/modelosController";
+import { useRouter } from "next/router";
+const modelName = "vulnerabilidades";
+export default function Vulnerabilidades({ vulnerabilidades }) {
+  const router = useRouter();
   return (
     <>
       <h1>Tabla de Vulnerabilidades</h1>
-      <button className="button" id="agregar">
+      <button
+        className="button"
+        id="agregar"
+        onClick={() => router.push(`${modelName}/crear`)}
+      >
         Agregar
       </button>
       <ModelTable model={Vulnerabilidad} data={vulnerabilidades} />
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const vulnerabilidades = await getItems(modelName);
+  return {
+    props: {
+      vulnerabilidades: vulnerabilidades,
+    },
+  };
+};

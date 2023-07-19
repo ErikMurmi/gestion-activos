@@ -1,23 +1,32 @@
 import { Activo } from "../../models/Activo";
 import ModelTable from "../../components/ModelTable";
+import { getItems } from "../../controllers/modelosController";
+import { useRouter } from "next/router";
+const modelName = "activos";
 
-export default function Activos() {
-  const activos = [
-    {
-      Ubicacion: "Oficina",
-      Departamento: "TI",
-      Clasificacion: "Elemento Prioritario",
-      Nombre: "Laptop",
-      Responsable: "Luis Perez",
-    },
-  ];
+export default function Activos({ activos }) {
+  const router = useRouter();
+
   return (
     <>
       <h1>Tabla de Activos</h1>
-      <button className="button" id="agregar">
+      <button
+        className="button"
+        id="agregar"
+        onClick={() => router.push(`${modelName}/crear`)}
+      >
         Agregar
       </button>
       <ModelTable model={Activo} data={activos} />
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const activos = await getItems(modelName);
+  return {
+    props: {
+      activos: activos,
+    },
+  };
+};
