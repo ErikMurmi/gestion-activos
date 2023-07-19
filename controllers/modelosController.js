@@ -1,5 +1,5 @@
-// const api_url = "https://gestion-activos.vercel.app/api";
-const api_url = "http://localhost:3000/api";
+const api_url = "https://gestion-activos.vercel.app/api";
+//const api_url = "http://localhost:3000/api";
 export const addItem = async (newItem, modelName) => {
   try {
     const res = await fetch(`${api_url}/models`, {

@@ -6,6 +6,9 @@ const modelName = "activos";
 
 export default function Activos({ activos }) {
   const router = useRouter();
+  function handleEdit(id) {
+    router.push(`${modelName}/editar?id=${id}`);
+  }
 
   return (
     <>
@@ -17,7 +20,12 @@ export default function Activos({ activos }) {
       >
         Agregar
       </button>
-      <ModelTable model={Activo} data={activos} modelName={modelName} />
+      <ModelTable
+        model={Activo}
+        data={activos}
+        modelName={modelName}
+        editFun={handleEdit}
+      />
     </>
   );
 }
