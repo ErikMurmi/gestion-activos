@@ -19,9 +19,6 @@ export default function SideBar() {
         <Link href="/controles">
           <li>Controles</li>
         </Link>
-        <Link href="/riesgos">
-          <li>Riesgos</li>
-        </Link>
       </ul>
     </nav>
   );
