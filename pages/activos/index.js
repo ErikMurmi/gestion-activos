@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Activo } from "../../models/Activo";
 import ModelTable from "../../components/ModelTable";
-import { getItems } from "../../controllers/modelosController";
+//import { getItems } from "../../controllers/modelosController";
+import { getItemsList } from "pages/api/models/getItemsList";
 import { useRouter } from "next/router";
 const modelName = "activos";
 
@@ -11,7 +12,7 @@ export default function Activos() {
 
   useEffect(() => {
     async function fetchActivos() {
-      const activosData = await getItems(modelName);
+      const activosData = await getItemsList(modelName);
       setActivos(activosData);
     }
 
