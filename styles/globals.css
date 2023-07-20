@@ -28,11 +28,14 @@ a {
 .app-layout {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .page {
-  padding: 1% 2%;
+  padding: 0% 3%;
+  padding-bottom: 5%;
   width: 100%;
 }
 
