@@ -53,7 +53,6 @@ export default function CrearControl({ riesgos }) {
     let msg = "No se pudo crear el item";
     if (actualizado) {
       // Restablecer el formulario después de enviar los datos
-      setFormulario(Amenaza);
       msg = "Se creo el item correctamente";
       alert(msg);
       router.replace(`/${modelName}`);
