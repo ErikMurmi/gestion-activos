@@ -74,8 +74,11 @@ export default function CrearRiesgo({ amenazas, vulnerabilidades, controles }) {
           >
             <option value="">Selecciona una Vulnerabilidad</option>
             {vulnerabilidades.map((vulnerabilidad) => (
-              <option key={vulnerabilidad.Nombre} value={vulnerabilidad.Nombre}>
-                {vulnerabilidad.Nombre}
+              <option
+                key={vulnerabilidad.Vulnerabilidad}
+                value={vulnerabilidad.Vulnerabilidad}
+              >
+                {vulnerabilidad.Vulnerabilidad}
               </option>
             ))}
           </select>
