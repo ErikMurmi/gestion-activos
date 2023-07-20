@@ -138,13 +138,13 @@ export default function CrearActivo({ vulnerabilidades }) {
                 <input
                   type="checkbox"
                   name="Vulnerabilidades"
-                  value={vulnerabilidad.Nombre}
+                  value={vulnerabilidad.Vulnerabilidad}
                   checked={formulario.Vulnerabilidades.includes(
-                    vulnerabilidad.Nombre
+                    vulnerabilidad.Vulnerabilidad
                   )}
                   onChange={handleVulnerabilidadesChange}
                 />
-                {vulnerabilidad.Nombre}
+                {vulnerabilidad.Vulnerabilidad}
               </label>
             ))}
           </div>
