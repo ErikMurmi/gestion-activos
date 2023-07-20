@@ -92,8 +92,8 @@ export default function CrearRiesgo({ amenazas, vulnerabilidades, controles }) {
           >
             <option value="">Selecciona un Control</option>
             {controles.map((control) => (
-              <option key={control.Nombre} value={control.Nombre}>
-                {control.Nombre}
+              <option key={control.Control} value={control.Control}>
+                {control.Control}
               </option>
             ))}
           </select>
