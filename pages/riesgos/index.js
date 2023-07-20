@@ -17,6 +17,9 @@ export default function Riesgos({ riesgos }) {
   // ];
 
   const router = useRouter();
+  function handleEdit(id) {
+    router.push(`${modelName}/editar?id=${id}`);
+  }
 
   return (
     <>
@@ -28,7 +31,12 @@ export default function Riesgos({ riesgos }) {
       >
         Agregar
       </button>
-      <ModelTable model={Riesgo} data={riesgos} modelName={modelName} />
+      <ModelTable
+        model={Riesgo}
+        data={riesgos}
+        modelName={modelName}
+        editFun={handleEdit}
+      />
     </>
   );
 }
