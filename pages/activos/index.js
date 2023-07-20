@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
 import { Activo } from "../../models/Activo";
 import ModelTable from "../../components/ModelTable";
 import { getItems } from "../../controllers/modelosController";
 import { useRouter } from "next/router";
 const modelName = "activos";
 
-export default function Activos({ activos }) {
+export default function Activos() {
+  const [activos, setActivos] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    async function fetchActivos() {
+      const activosData = await getItems(modelName);
+      setActivos(activosData);
+    }
+
+    fetchActivos();
+  }, []);
+
   function handleEdit(id) {
     router.push(`${modelName}/editar?id=${id}`);
   }
@@ -29,12 +41,3 @@ export default function Activos({ activos }) {
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const activos = await getItems(modelName);
-  return {
-    props: {
-      activos: activos,
-    },
-  };
-};
